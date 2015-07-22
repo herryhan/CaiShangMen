@@ -81,7 +81,7 @@
     //设置选中状态的图片
     [customButton setImage:[UIImage imageNamed:selected] forState:UIControlStateSelected];
     [customButton setTitle:title forState:UIControlStateNormal];
-    [customButton  setTitleColor:[UIColor colorWithRed:0.05f green:0.7f blue:0.5f alpha:1.0] forState:UIControlStateSelected];//?
+    [customButton  setTitleColor:[UIColor colorWithRed:0.05f green:0.7f blue:0.5f alpha:1.0] forState: UIControlStateSelected];//?
     
     [customButton addTarget:self action:@selector(changeViewController:) forControlEvents:UIControlEventTouchDown];
     
@@ -97,9 +97,6 @@
         _previousBtn = customButton;
         _previousBtn.selected =YES;
     }
-    
-    
-    
 }
 #pragma mark 按钮被点击时
 -(void)changeViewController:(NTButton *)sender

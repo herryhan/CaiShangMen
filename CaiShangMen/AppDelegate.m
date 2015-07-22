@@ -23,6 +23,7 @@
     _viewController=[[NTViewController alloc]init];
     self.window.rootViewController=_viewController;
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 

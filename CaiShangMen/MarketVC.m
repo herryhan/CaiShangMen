@@ -21,27 +21,54 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.title=@"菜篮子";
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+//    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]
+//                                 initWithTitle:@"11"
+//                                 style:UIBarButtonItemStyleBordered
+//                                 target:self
+//                                 action:@selector(sender:)];
+    UIImage *searchimage=[UIImage imageNamed:@"search@3x"];
+    UIBarButtonItem *barbtn=[[UIBarButtonItem alloc] initWithImage:nil style:UIBarButtonItemStyleDone target:self action:@selector(searchprogram)];
+    barbtn.image=searchimage;
+   self.navigationItem.rightBarButtonItem=barbtn;
+//     self.navigationItem.rightBarButtonItem = rightBtn;
     [self createscrollview];
     [self config];
     
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear: animated];
+    [self.navigationController setNavigationBarHidden:NO];
+    
+    //修改导航栏背景--》透明
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"bg1"]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
 }
 -(void)createscrollview
 {
     UIScrollView *sv=[[UIScrollView alloc]initWithFrame:CGRectMake(0, 64,self.view.bounds.size.width , 120)];
     sv.contentSize=CGSizeMake((self.view.bounds.size.width)*3, 120);
     sv.pagingEnabled=YES;
-    sv.backgroundColor=[UIColor yellowColor];
-    sv.alwaysBounceHorizontal=YES;
+    sv.backgroundColor = [UIColor redColor];
+    sv.showsHorizontalScrollIndicator = NO;
+    sv.showsVerticalScrollIndicator = NO;
+    //sv.backgroundColor=[UIColor yellowColor];
+   // sv.alwaysBounceHorizontal=YES;
     
     //
     sv.contentOffset=CGPointMake(self.view.bounds.size.width, 0);
     [self.view addSubview:sv];
-//    for (int i=0; i<3; i++) {
-//        UIImageView *imageView=[[UIImageView alloc]init];
-//       // imageView.frame=CGRectMake(i*, 0, 250, 220);
-//        imageView.image=[UIImage imageNamed:[NSString stringWithFormat:@"",i+1]];
-//        [sv addSubview:imageView];
- //   }
+    for (int i=0; i<3; i++) {
+        UIImageView *imageView=[[UIImageView alloc]init];
+        imageView.frame=CGRectMake(i*sv.frame.size.width, 0, sv.frame.size.width, 120);
+        imageView.image=[UIImage imageNamed:@"search"];
+        [sv addSubview:imageView];
+    }
   
 }
 -(void)config
@@ -51,7 +78,6 @@
     NSArray *titleArr = [NSArray arrayWithObjects:@"热门",@"蔬菜",@"鲜肉",@"粮食",nil];
     for (int i =0; i<imageArr.count; i++) {
         UIView *view = [[UIView alloc]initWithFrame:CGRectMake((self.view.bounds.size.width) /4 *i, 184, (self.view.bounds.size.width) /4, 80 +20)];
-        
         [self.view addSubview:view];
         
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -62,15 +88,13 @@
     
         UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 65, (self.view.bounds.size.width) /4, 20)];
         label.textAlignment = NSTextAlignmentCenter;
-        
         label.text = titleArr[i];
-        
         [view addSubview:label];
         
     }
     
     UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 184+100, self.view.frame.size.width, 10)];
-    view.backgroundColor = [UIColor lightGrayColor];
+    view.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1];
     [self.view addSubview:view];
     
     [self createTB];
@@ -81,9 +105,10 @@
 -(void)createTB
 {
     _tabelView =[[UITableView alloc]initWithFrame:CGRectMake(0, 294, self.view.frame.size.width, self.view.frame.size.height - 294 - 40) style:UITableViewStylePlain];
-    _tabelView.backgroundColor = [UIColor yellowColor];
+    //_tabelView.backgroundColor = [UIColor yellowColor];
     _tabelView.delegate =self;
     _tabelView.dataSource =self;
+    _tabelView.tableHeaderView.backgroundColor = [UIColor redColor];
     [self.view addSubview:_tabelView];
 }
 
@@ -119,11 +144,28 @@
     return 100;
 }
 
+
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+        return @"猜你喜欢";
+}
+
+- (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 10.0;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+-(void)searchprogram
+{
+    //search
+}
 /*
 #pragma mark - Navigation
 
